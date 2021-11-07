@@ -284,7 +284,7 @@ function PetriNetworkCanvas(Places, Transitions, container, marking_container, a
         }
     }
 
-    setInterval(fireEnabledTransition, 500);
+    setInterval(fireEnabledTransition, 250);
 
     this.setMarking = function(marking) {
         if (stage === null) {
