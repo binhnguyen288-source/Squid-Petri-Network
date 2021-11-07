@@ -159,7 +159,7 @@
                             return;
                         }
                         if (Module.ccall("countReachable", 'string', ['number', 'number', 'number', 'number', 'number', 'number'], args).length >= 4) {
-                            alert('Too many sequence');
+                            alert('Too many sequences');
                             return;
                         }
                         output.value = Module.ccall("findReachable", 'string', ['number', 'number', 'number', 'number', 'number', 'number'], args);
