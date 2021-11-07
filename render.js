@@ -251,7 +251,7 @@ function PetriNetworkCanvas(Places, Transitions, container, marking_container, a
     drawPetriNet();
     this.setToken = function(place, amount) {
         if (stage === null) {
-            Places[place][2] = Math.max(0, amount);
+            Places[place][2] = amount ? Math.max(0, parseInt(amount)) : 0;
             drawPetriNet();
         }
     }
@@ -382,11 +382,26 @@ const specialistNet = new PetriNetworkCanvas({
 }, "specialist", "specialistMarking", "specialistAutofire", ["start", "change", "end"]);
 
 
-document.getElementById("setPatient").onclick = () => patientNet.setMarking(document.getElementById('patient_amount').value);
+document.getElementById("setPatient").onclick = () => {
+    patientNet.setToken("wait", document.getElementById("patient_wait").value);
+    patientNet.setToken("inside", document.getElementById("patient_inside").value);
+    patientNet.setToken("done", document.getElementById("patient_done").value);
+}
 
-document.getElementById("setSpecialist").onclick = () => specialistNet.setMarking(document.getElementById('specialist_amount').value);
+document.getElementById("setSpecialist").onclick = () => {
+    specialistNet.setToken("free", document.getElementById("specialist_free").value);
+    specialistNet.setToken("busy", document.getElementById("specialist_busy").value);
+    specialistNet.setToken("docu", document.getElementById("specialist_docu").value);
+}
 
 
-document.getElementById("setImposed").onclick = () => imposedNet.setMarking(document.getElementById('imposed_amount').value);
+document.getElementById("setImposed").onclick = () => {
+    imposedNet.setToken("wait", document.getElementById("imposed_wait").value);
+    imposedNet.setToken("inside", document.getElementById("imposed_inside").value);
+    imposedNet.setToken("done", document.getElementById("imposed_done").value);
+    imposedNet.setToken("free", document.getElementById("imposed_free").value);
+    imposedNet.setToken("busy", document.getElementById("imposed_busy").value);
+    imposedNet.setToken("docu", document.getElementById("imposed_docu").value);
+}
 
 

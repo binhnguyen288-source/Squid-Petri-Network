@@ -15,47 +15,124 @@
             <hr>
             <h2>Patient network</h2>
             Click on any transition to fire it!
-            <div class="hstack gap-3 pt-2">
-                <input id="patient_amount" class="form-control me-auto" type="text" placeholder="Enter the marking you want to set here (for example: 3.wait, 2.inside)">
-                <button type="button" class="btn btn-secondary" id="setPatient">Set</button>
-                <input class="form-check-input" type="checkbox" value="" id="patientAutofire">
-                <label class="form-check-label" for="patientAutofire">
-                    Autofire
-                </label>
+            <div class="hstack gap-2 pt-2">
+                Enter your initial marking: M0 = [
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="patient_wait" class="form-control" type="text">
+                <label class="form-check-label" for="patient_wait">.wait,</label>
+                </div>
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="patient_inside" class="form-control" type="text">
+                <label class="form-check-label" for="patient_inside">.inside,</label>
+                </div>
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="patient_done" class="form-control" type="text">
+                <label class="form-check-label" for="patient_done">.done</label>
+                </div>]
+                <div class="vr ms-auto"></div>
+                <button type="button" class="btn btn-primary" id="setPatient">Set</button>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" value="" id="patientAutofire">
+                    <label class="form-check-label" for="patientAutofire">Auto-firing</label>
+                </div>
             </div>
             <canvas id="patient" class="text-center" width=1000 height=200></canvas>
             <div class="pt-2" id="patientMarking"></div>
             <hr>
             <h2>Specialist network</h2>
             Click on any transition to fire it!
-            <div class="hstack gap-3 pt-2">
-                <input id="specialist_amount" class="form-control me-auto" type="text" placeholder="Enter the marking you want to set here (for example: 3.free, 2.docu)">
-                <button type="button" class="btn btn-secondary" id="setSpecialist">Set</button>
-                <input class="form-check-input" type="checkbox" value="" id="specialistAutofire">
-                <label class="form-check-label" for="specialistAutofire">
-                    Autofire
-                </label>
+            <div class="hstack gap-2 pt-2">
+                Enter your initial marking: M0 = [
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="specialist_free" class="form-control" type="text">
+                <label class="form-check-label" for="specialist_free">.free,</label>
+                </div>
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="specialist_busy" class="form-control" type="text">
+                <label class="form-check-label" for="specialist_busy">.busy,</label>
+                </div>
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="specialist_docu" class="form-control" type="text">
+                <label class="form-check-label" for="specialist_docu">.docu</label>
+                </div>]
+                <div class="vr ms-auto"></div>
+                <button type="button" class="btn btn-primary" id="setSpecialist">Set</button>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" value="" id="specialistAutofire">
+                    <label class="form-check-label" for="specialistAutofire">Auto-firing</label>
+                </div>
             </div>
             <canvas id="specialist" class="text-center" width=1000 height=400></canvas>
             <div class="pt-2" id="specialistMarking"></div>
             <hr>
             <h2>Superimposed network</h2>
             Click on any transition to fire it!
-            <div class="hstack gap-3 pt-2">
-                <input id="imposed_amount" class="form-control me-auto" type="text" placeholder="Enter the marking you want to set here (for example: 3.wait, 2.free)">
-                <button type="button" class="btn btn-secondary" id="setImposed">Set</button>
-                <input class="form-check-input" type="checkbox" value="" id="imposedAutofire">
-                <label class="form-check-label" for="imposedAutofire">
-                    Autofire
-                </label>
+            <div class="hstack gap-2 pt-2">
+                Enter your initial marking: M0 = [
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="imposed_wait" class="form-control" type="text">
+                <label class="form-check-label" for="imposed_wait">.wait,</label>
+                </div>
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="imposed_free" class="form-control" type="text">
+                <label class="form-check-label" for="imposed_free">.free,</label>
+                </div>
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="imposed_inside" class="form-control" type="text">
+                <label class="form-check-label" for="imposed_inside">.inside,</label>
+                </div>
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="imposed_busy" class="form-control" type="text">
+                <label class="form-check-label" for="imposed_busy">.busy,</label>
+                </div>
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="imposed_done" class="form-control" type="text">
+                <label class="form-check-label" for="imposed_done">.done</label>
+                </div>
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="imposed_docu" class="form-control" type="text">
+                <label class="form-check-label" for="imposed_docu">.docu</label>
+                </div>]
+                <div class="vr ms-auto"></div>
+                <button type="button" class="btn btn-primary" id="setImposed">Set</button>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" value="" id="imposedAutofire">
+                    <label class="form-check-label" for="imposedAutofire">Auto-firing</label>
+                </div>
             </div>
             <canvas id="imposed" class="text-center" width=1000 height=600></canvas>
             <div class="pt-2" id="imposedMarking"></div>
             <hr>
             <h2>Reachable marking calculator</h2>
-            <div class="hstack gap-3 pt-2">
-                <input id="initial_wait" class="form-control me-auto" type="text" placeholder="Enter the number of patients here" aria-label="Add your item here...">
-                <button type="button" class="btn btn-secondary" id="run">Run</button>
+            <div class="hstack gap-2 pt-2">
+                Enter your initial marking: M0 = [
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="compute_wait" class="form-control" type="text">
+                <label class="form-check-label" for="compute_wait">.wait,</label>
+                </div>
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="compute_free" class="form-control" type="text">
+                <label class="form-check-label" for="compute_free">.free,</label>
+                </div>
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="compute_inside" class="form-control" type="text">
+                <label class="form-check-label" for="compute_inside">.inside,</label>
+                </div>
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="compute_busy" class="form-control" type="text">
+                <label class="form-check-label" for="compute_busy">.busy,</label>
+                </div>
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="compute_done" class="form-control" type="text">
+                <label class="form-check-label" for="compute_done">.done</label>
+                </div>
+                <div class="hstack gap-1 input-group-sm col-1">
+                <input id="compute_docu" class="form-control" type="text">
+                <label class="form-check-label" for="compute_docu">.docu</label>
+                </div>]
+                <div class="vr ms-auto"></div>
+                <button type="button" class="btn btn-primary" id="findReachable">Find</button>
+                <button type="button" class="btn btn-primary" id="countReachable">Count</button>
             </div>
             <div class="pt-3">
                 <label for="output" class="form-label">All firing sequences and reachable markings</label>
@@ -64,10 +141,22 @@
             <script src="./PetriNet.js"></script>
             <script>
                 Module['onRuntimeInitialized'] = () => {
-                    const runButton = document.getElementById("run");
+                    const findButton = document.getElementById("findReachable");
+                    const countButton = document.getElementById("countReachable");
                     const output = document.getElementById("output");
-                    runButton.onclick = () => {
-                        output.value = Module.ccall("runSim", 'string', ['number'], [parseInt(document.getElementById("initial_wait").value)]);
+                    findButton.onclick = () => {
+                        const args = ["free", "wait", "busy", "inside", "docu", "done"].map(v => {
+                            const str = document.getElementById(`compute_${v}`).value;
+                            return str ? parseInt(str) : 0;
+                        });
+                        output.value = Module.ccall("findReachable", 'string', ['number', 'number', 'number', 'number', 'number', 'number'], args);
+                    }
+                    countButton.onclick = () => {
+                        const args = ["free", "wait", "busy", "inside", "docu", "done"].map(v => {
+                            const str = document.getElementById(`compute_${v}`).value;
+                            return str ? parseInt(str) : 0;
+                        });
+                        output.value = Module.ccall("countReachable", 'string', ['number', 'number', 'number', 'number', 'number', 'number'], args);
                     }
                 }
             </script>
