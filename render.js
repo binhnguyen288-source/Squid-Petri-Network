@@ -10,7 +10,7 @@ function PetriNetworkCanvas(Places, Transitions, container, marking_container, a
     
     ctx.font = "15px Arial";
     ctx.textAlign = "center";
-    const radius = 33;
+    const radius = 25;
     const spacing = radius * 6;
     let Transitioning = null;
     let stage = null;

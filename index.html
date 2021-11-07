@@ -13,7 +13,7 @@
             Welcome to Squid Petri Network, a Petri Network Simulation by Squid Game Mathematical Modeling CC05.<br>
             Use at your own risk and enjoy your game. 🙂
             <hr>
-            <h2>Patient network</h2>
+            <h2>Item 1: Patient network</h2>
             Click on any transition to fire it!
             <div class="hstack gap-2 pt-2">
                 Enter your initial marking: M0 = [
@@ -39,7 +39,7 @@
             <canvas id="patient" class="text-center" width=1000 height=200></canvas>
             <div class="pt-2" id="patientMarking"></div>
             <hr>
-            <h2>Specialist network</h2>
+            <h2>Item 2: Specialist network</h2>
             Click on any transition to fire it!
             <div class="hstack gap-2 pt-2">
                 Enter your initial marking: M0 = [
@@ -62,10 +62,10 @@
                     <label class="form-check-label" for="specialistAutofire">Auto-firing</label>
                 </div>
             </div>
-            <canvas id="specialist" class="text-center" width=1000 height=400></canvas>
+            <canvas id="specialist" class="text-center" width=500 height=300></canvas>
             <div class="pt-2" id="specialistMarking"></div>
             <hr>
-            <h2>Superimposed network</h2>
+            <h2>Item 3: Superimposed network</h2>
             Click on any transition to fire it!
             <div class="hstack gap-2 pt-2">
                 Enter your initial marking: M0 = [
@@ -100,10 +100,10 @@
                     <label class="form-check-label" for="imposedAutofire">Auto-firing</label>
                 </div>
             </div>
-            <canvas id="imposed" class="text-center" width=1000 height=600></canvas>
+            <canvas id="imposed" class="text-center" width=1000 height=450></canvas>
             <div class="pt-2" id="imposedMarking"></div>
             <hr>
-            <h2>Reachable marking calculator</h2>
+            <h2>Item 4: Reachable marking calculator</h2>
             <div class="hstack gap-2 pt-2">
                 Enter your initial marking: M0 = [
                 <div class="hstack gap-1 input-group-sm col-1">
@@ -134,9 +134,9 @@
                 <button type="button" class="btn btn-primary" id="findReachable">Find</button>
                 <button type="button" class="btn btn-primary" id="countReachable">Count</button>
             </div>
-            <div class="pt-3">
+            <div class="pt-3 mb-5">
                 <label for="output" class="form-label">All firing sequences and reachable markings</label>
-                <textarea class="form-control" id="output" rows="30"></textarea>
+                <textarea class="form-control" id="output" rows="10"></textarea>
             </div>
             <script src="./PetriNet.js"></script>
             <script>
