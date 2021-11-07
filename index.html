@@ -138,49 +138,73 @@
                 <label for="output" class="form-label">All firing sequences and reachable markings</label>
                 <textarea class="form-control" id="output" rows="10"></textarea>
             </div>
-            <script src="./PetriNet.js"></script>
             <script>
-                Module['onRuntimeInitialized'] = () => {
-                    const findButton = document.getElementById("findReachable");
-                    const countButton = document.getElementById("countReachable");
-                    const output = document.getElementById("output");
-                    findButton.onclick = () => {
-                        const args = ["free", "wait", "busy", "inside", "docu", "done"].map(v => {
-                            const str = document.getElementById(`compute_${v}`).value;
-                            return str ? parseInt(str) : 0;
-                        });
-                        if (Math.min(...args) < 0) {
-                            
-                            alert('Inputs must be non-negative');
-                            return;
-                        }
-                        if (args[1] > 10) {
-                            alert('Input too large, must be <= 10');
-                            return;
-                        }
-                        const markingCount = Module.ccall("countReachable", 'string', ['number', 'number', 'number', 'number', 'number', 'number'], args);
-                        if (markingCount.length >= 4) {
-                            alert(`Too many sequences, there are ${markingCount} reachable markings`);
-                            return;
-                        }
-                        output.value = Module.ccall("findReachable", 'string', ['number', 'number', 'number', 'number', 'number', 'number'], args);
-                    }
-                    countButton.onclick = () => {
-                        const args = ["free", "wait", "busy", "inside", "docu", "done"].map(v => {
-                            const str = document.getElementById(`compute_${v}`).value;
-                            return str ? parseInt(str) : 0;
-                        });
+                const findButton = document.getElementById("findReachable");
+                const countButton = document.getElementById("countReachable");
+                const output = document.getElementById("output");
+                findButton.onclick = () => {
+                    const args = ["free", "wait", "busy", "inside", "docu", "done"].map(v => {
+                        const str = document.getElementById(`compute_${v}`).value;
+                        return str ? parseInt(str) : 0;
+                    });
+                    if (Math.min(...args) < 0) {
                         
-                        if (Math.min(...args) < 0) {
-                            alert('Inputs must be non-negative');
-                            return;
-                        }
-                        if (args[1] > 10) {
-                            alert('Input too large, must be <= 10');
-                            return;
-                        }
-                        output.value = Module.ccall("countReachable", 'string', ['number', 'number', 'number', 'number', 'number', 'number'], args);
+                        alert('Inputs must be non-negative');
+                        return;
                     }
+                    if (args[1] > 10) {
+                        alert('Input too large, must be <= 10');
+                        return;
+                    }
+
+                    const worker = new Worker('./worker.js');
+
+                    const timeout_worker = setTimeout(() => {
+                        alert('Computation takes too long, stopping');
+                        worker.terminate();
+                    }, 10000);
+
+                    worker.onmessage = ev => {
+                        const [msg, result] = JSON.parse(ev.data);
+                        if (msg === 'error') {
+                            alert(`Too many sequences, there are ${result} reachable markings`);
+                        }
+                        if (msg === 'success') {
+                            output.value = result;
+                        }
+                        clearTimeout(timeout_worker);
+                        worker.terminate();
+                    }
+                    worker.postMessage(JSON.stringify(["find", args]));
+                }
+                countButton.onclick = () => {
+                    const args = ["free", "wait", "busy", "inside", "docu", "done"].map(v => {
+                        const str = document.getElementById(`compute_${v}`).value;
+                        return str ? parseInt(str) : 0;
+                    });
+                    
+                    if (Math.min(...args) < 0) {
+                        alert('Inputs must be non-negative');
+                        return;
+                    }
+                    if (args[1] > 10) {
+                        alert('Input too large, must be <= 10');
+                        return;
+                    }
+                    const worker = new Worker('./worker.js');
+
+                    const timeout_worker = setTimeout(() => {
+                        alert('Computation takes too long, stopping');
+                        worker.terminate();
+                    }, 10000);
+
+
+                    worker.onmessage = ev => {
+                        output.value = ev.data;
+                        clearTimeout(timeout_worker);
+                        worker.terminate();
+                    }
+                    worker.postMessage(JSON.stringify(["count", args]));
                 }
             </script>
             <script src="render.js"></script>
