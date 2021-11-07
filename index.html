@@ -160,7 +160,7 @@
                         }
                         const markingCount = Module.ccall("countReachable", 'string', ['number', 'number', 'number', 'number', 'number', 'number'], args);
                         if (markingCount.length >= 4) {
-                            alert(`Too many sequences, there are ${markingCount} markings`);
+                            alert(`Too many sequences, there are ${markingCount} reachable markings`);
                             return;
                         }
                         output.value = Module.ccall("findReachable", 'string', ['number', 'number', 'number', 'number', 'number', 'number'], args);
