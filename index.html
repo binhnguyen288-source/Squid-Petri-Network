@@ -149,7 +149,12 @@
                             const str = document.getElementById(`compute_${v}`).value;
                             return str ? parseInt(str) : 0;
                         });
-                        if (Math.min(args) < 0 || args[1] > 10) alert('Invalid input');
+                        if (Math.min(args) < 0) {
+                            alert('Inputs must be non-negative');
+                        }
+                        if (args[1] > 10) {
+                            alert('Input too large, must be <= 10');
+                        }
                         output.value = Module.ccall("findReachable", 'string', ['number', 'number', 'number', 'number', 'number', 'number'], args);
                     }
                     countButton.onclick = () => {
@@ -158,7 +163,12 @@
                             return str ? parseInt(str) : 0;
                         });
                         
-                        if (Math.min(args) < 0 || args[1] > 10) alert('Invalid input');
+                        if (Math.min(args) < 0) {
+                            alert('Inputs must be non-negative');
+                        }
+                        if (args[1] > 10) {
+                            alert('Input too large, must be <= 10');
+                        }
                         output.value = Module.ccall("countReachable", 'string', ['number', 'number', 'number', 'number', 'number', 'number'], args);
                     }
                 }
