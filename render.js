@@ -3,9 +3,10 @@
 
 
 
-function PetriNetworkCanvas(Places, Transitions, container) {
+function PetriNetworkCanvas(Places, Transitions, container, marking_container, autofire, autofire_order) {
     const canvas = document.getElementById(container);
     const ctx = canvas.getContext("2d");
+    const autofire_check = document.getElementById(autofire);
     
     ctx.font = "15px Arial";
     ctx.textAlign = "center";
@@ -14,6 +15,17 @@ function PetriNetworkCanvas(Places, Transitions, container) {
     let Transitioning = null;
     let stage = null;
     const time_limit = 0.5;
+
+    function updateMarking() {
+        const result = [];
+
+        for (const [name, val] of Object.entries(Places)) {
+            result.push(`${val[2]}.${name}`);
+        }
+
+        document.getElementById(marking_container).innerText = `Current Marking: [${result.join(',')}]`;
+
+    }
     
     function getTopLeft(i, j) {
         return [3 * radius + i * spacing, 3 * radius + j * spacing];
@@ -134,24 +146,21 @@ function PetriNetworkCanvas(Places, Transitions, container) {
                 drawLineWithArrows(srci, srcj, desi, desj);
             }
         }
+        updateMarking();
     }
 
     let startTime;
     let moving_tokens = [];
     
 
-
+    function enabledTransition(name) {
+        return Transitions[name][3].every(src_place => Places[src_place][2] > 0);
+    }
 
     function searchTransition(i, j) {
-
-        function enabledTransition(name) {
-            return Transitions[name][3].every(src_place => Places[src_place][2] > 0);
-        }
-
         for (const [name, arr] of Object.entries(Transitions)) {
             if (i === arr[0] && j === arr[1] && enabledTransition(name)) return name;
         }
-
         return null;
     }
 
@@ -214,25 +223,6 @@ function PetriNetworkCanvas(Places, Transitions, container) {
         const [fromX, fromY] = getCenter(fromi, fromj);
         const [toX, toY] = getCenter(toi, toj);
         return t => [(t * toX + (time_limit - t) * fromX) / time_limit, (t * toY + (time_limit - t) * fromY) / time_limit];
-        // if (fromi === toi || fromj === toj)
-        // return t => [(t * toX + (time_limit - t) * fromX) / time_limit, (t * toY + (time_limit - t) * fromY) / time_limit];
-        
-        // else if (fromj < toj) {
-        //     return t => {
-        //         if (t < time_limit / 2) return [fromX, (t * toY + (time_limit / 2 - t) * fromY) / (time_limit / 2)];
-        //         else return [((t - time_limit / 2) * toX + (time_limit - t) * fromX) / (time_limit / 2), toY];
-        //     }
-        // }
-        // else if (fromj > toj) {
-        //     return t => {
-        //         if (t < time_limit / 2) return [(t * toX + (time_limit / 2 - t) * fromX) / (time_limit / 2), fromY];
-        //         else return [toX, ((t - time_limit / 2) * toY + (time_limit - t) * fromY) / (time_limit / 2)];
-        //     }
-        // }
-        // else {
-        //     console.error('not implemented');
-        //     alert('not implemented');
-        // }
     }
 
     canvas.addEventListener('click', ev => {
@@ -261,10 +251,60 @@ function PetriNetworkCanvas(Places, Transitions, container) {
     drawPetriNet();
     this.setToken = function(place, amount) {
         if (stage === null) {
-            Places[place][2] = amount;
+            Places[place][2] = Math.max(0, amount);
             drawPetriNet();
         }
     }
+    let prev_transition = autofire_order[0];
+    function fireEnabledTransition() {
+        if (autofire_check.checked && stage === null) {
+            if (enabledTransition(prev_transition)) {
+                Transitioning = prev_transition;
+                stage = 1;
+                for (const src_place of Transitions[Transitioning][3]) {
+                    Places[src_place][2]--;
+                    moving_tokens.push(coorFunction(src_place, Transitioning));
+                }
+                beginDraw();
+                return;
+            }
+            for (const transition of autofire_order) {
+                if (enabledTransition(transition)) {
+                    Transitioning = transition;
+                    stage = 1;
+                    for (const src_place of Transitions[Transitioning][3]) {
+                        Places[src_place][2]--;
+                        moving_tokens.push(coorFunction(src_place, Transitioning));
+                    }
+                    beginDraw();
+                    prev_transition = transition;
+                    break;
+                }
+            }
+        }
+    }
+
+    setInterval(fireEnabledTransition, 500);
+
+    this.setMarking = function(marking) {
+        if (stage === null) {
+            for (const place of Object.keys(Places)) {
+                Places[place][2] = 0;
+            }
+            const set_places = marking.split(',');
+            for (const set_place of set_places) {
+                const [amount, name] = set_place.split('.');
+                if (!Places[name]) {
+                    alert(`${name} is not a place`);
+                    continue;
+                }
+                Places[name][2] = Math.max(0, parseInt(amount));
+            }
+            drawPetriNet();
+        }
+    }
+
+
 
     this.reset = function() {
         if (stage === null) {
@@ -300,7 +340,7 @@ const imposedNet = new PetriNetworkCanvas({
         ["busy", "inside"], 
         ["docu", "done"]
     ]
-}, "imposed");
+}, "imposed", "imposedMarking", "imposedAutofire", ["start", "change", "end"]);
 
 const patientNet = new PetriNetworkCanvas({
     "wait": [0, 0, 5],
@@ -317,7 +357,7 @@ const patientNet = new PetriNetworkCanvas({
         ["inside"], 
         ["done"]
     ]
-}, "patient");
+}, "patient", "patientMarking", "patientAutofire", ["start", "change"]);
 
 const specialistNet = new PetriNetworkCanvas({
     "free": [0, 0, 5],
@@ -339,20 +379,14 @@ const specialistNet = new PetriNetworkCanvas({
         ["busy"], 
         ["docu"]
     ]
-}, "specialist");
+}, "specialist", "specialistMarking", "specialistAutofire", ["start", "change", "end"]);
 
 
-document.getElementById("setPatient").onclick = () => patientNet.setToken("wait", parseInt(document.getElementById('patient_amount').value));
-document.getElementById("resetPatient").onclick = () => patientNet.reset();
+document.getElementById("setPatient").onclick = () => patientNet.setMarking(document.getElementById('patient_amount').value);
 
-document.getElementById("setSpecialist").onclick = () => specialistNet.setToken("free", parseInt(document.getElementById('specialist_amount').value));
-document.getElementById("resetSpecialist").onclick = () => specialistNet.reset();
+document.getElementById("setSpecialist").onclick = () => specialistNet.setMarking(document.getElementById('specialist_amount').value);
 
-document.getElementById("setImposed").onclick = () => {
-    const [patient, specialist] = document.getElementById('imposed_amount').value.split(',');
-    imposedNet.setToken("free", parseInt(specialist));
-    imposedNet.setToken("wait", parseInt(patient));
-}
 
-document.getElementById("resetImposed").onclick = () => imposedNet.reset();
+document.getElementById("setImposed").onclick = () => imposedNet.setMarking(document.getElementById('imposed_amount').value);
+
 

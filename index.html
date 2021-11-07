@@ -16,32 +16,41 @@
             <h2>Patient network</h2>
             Click on any transition to fire it!
             <div class="hstack gap-3 pt-2">
-                <input id="patient_amount" class="form-control me-auto" type="text" placeholder="Enter the number of patients here">
+                <input id="patient_amount" class="form-control me-auto" type="text" placeholder="Enter the marking you want to set here (for example: 3.wait, 2.inside)">
                 <button type="button" class="btn btn-secondary" id="setPatient">Set</button>
-                <div class="vr"></div>
-                <button type="button" class="btn btn-outline-danger" id="resetPatient">Reset</button>
+                <input class="form-check-input" type="checkbox" value="" id="patientAutofire">
+                <label class="form-check-label" for="patientAutofire">
+                    Autofire
+                </label>
             </div>
             <canvas id="patient" class="text-center" width=1000 height=200></canvas>
+            <div class="pt-2" id="patientMarking"></div>
             <hr>
             <h2>Specialist network</h2>
             Click on any transition to fire it!
             <div class="hstack gap-3 pt-2">
-                <input id="specialist_amount" class="form-control me-auto" type="text" placeholder="Enter the number of specialist here">
+                <input id="specialist_amount" class="form-control me-auto" type="text" placeholder="Enter the marking you want to set here (for example: 3.free, 2.docu)">
                 <button type="button" class="btn btn-secondary" id="setSpecialist">Set</button>
-                <div class="vr"></div>
-                <button type="button" class="btn btn-outline-danger" id="resetSpecialist">Reset</button>
+                <input class="form-check-input" type="checkbox" value="" id="specialistAutofire">
+                <label class="form-check-label" for="specialistAutofire">
+                    Autofire
+                </label>
             </div>
             <canvas id="specialist" class="text-center" width=1000 height=400></canvas>
+            <div class="pt-2" id="specialistMarking"></div>
             <hr>
             <h2>Superimposed network</h2>
             Click on any transition to fire it!
             <div class="hstack gap-3 pt-2">
-                <input id="imposed_amount" class="form-control me-auto" type="text" placeholder="Enter the number of patient, specialist here (for example 2,3)">
+                <input id="imposed_amount" class="form-control me-auto" type="text" placeholder="Enter the marking you want to set here (for example: 3.wait, 2.free)">
                 <button type="button" class="btn btn-secondary" id="setImposed">Set</button>
-                <div class="vr"></div>
-                <button type="button" class="btn btn-outline-danger" id="resetImposed">Reset</button>
+                <input class="form-check-input" type="checkbox" value="" id="imposedAutofire">
+                <label class="form-check-label" for="imposedAutofire">
+                    Autofire
+                </label>
             </div>
             <canvas id="imposed" class="text-center" width=1000 height=600></canvas>
+            <div class="pt-2" id="imposedMarking"></div>
             <hr>
             <h2>Reachable marking calculator</h2>
             <div class="hstack gap-3 pt-2">
