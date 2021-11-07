@@ -151,9 +151,11 @@
                         });
                         if (Math.min(args) < 0) {
                             alert('Inputs must be non-negative');
+                            return;
                         }
                         if (args[1] > 10) {
                             alert('Input too large, must be <= 10');
+                            return;
                         }
                         output.value = Module.ccall("findReachable", 'string', ['number', 'number', 'number', 'number', 'number', 'number'], args);
                     }
@@ -165,9 +167,11 @@
                         
                         if (Math.min(args) < 0) {
                             alert('Inputs must be non-negative');
+                            return;
                         }
                         if (args[1] > 10) {
                             alert('Input too large, must be <= 10');
+                            return;
                         }
                         output.value = Module.ccall("countReachable", 'string', ['number', 'number', 'number', 'number', 'number', 'number'], args);
                     }
