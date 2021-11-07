@@ -11,11 +11,37 @@
             Welcome to Squid Petri Network, a Petri Network Simulation by Squid Game Mathematical Modeling CC05.<br>
             Use at your own risk and enjoy your game. 🙂
             <hr>
+            <h2>Patient network</h2>
+            <div class="hstack gap-3">
+                <input id="patient_amount" class="form-control me-auto" type="text" placeholder="Enter the number of patients here">
+                <button type="button" class="btn btn-secondary" id="setPatient">Set</button>
+                <div class="vr"></div>
+                <button type="button" class="btn btn-outline-danger" id="resetPatient">Reset</button>
+            </div>
+            <canvas id="patient" class="text-center" width=1000 height=200></canvas>
+            <hr>
+            <h2>Specialist network</h2>
+            <div class="hstack gap-3">
+                <input id="specialist_amount" class="form-control me-auto" type="text" placeholder="Enter the number of specialist here">
+                <button type="button" class="btn btn-secondary" id="setSpecialist">Set</button>
+                <div class="vr"></div>
+                <button type="button" class="btn btn-outline-danger" id="resetSpecialist">Reset</button>
+            </div>
+            <canvas id="specialist" class="text-center" width=1000 height=400></canvas>
+            <hr>
+            <h2>Superimposed network</h2>
+            <div class="hstack gap-3">
+                <input id="imposed_amount" class="form-control me-auto" type="text" placeholder="Enter the number of patient, specialist here (for example 2,3)">
+                <button type="button" class="btn btn-secondary" id="setImposed">Set</button>
+                <div class="vr"></div>
+                <button type="button" class="btn btn-outline-danger" id="resetImposed">Reset</button>
+            </div>
+            <canvas id="imposed" class="text-center" width=1000 height=600></canvas>
+            <hr>
+            <h2>Reachable marking calculator</h2>
             <div class="hstack gap-3">
                 <input id="initial_wait" class="form-control me-auto" type="text" placeholder="Enter the number of patients here" aria-label="Add your item here...">
                 <button type="button" class="btn btn-secondary" id="run">Run</button>
-                <div class="vr"></div>
-                <button type="button" class="btn btn-outline-danger">Reset</button>
             </div>
             <div class="pt-3">
                 <label for="output" class="form-label">All firing sequences and reachable markings</label>
@@ -31,6 +57,8 @@
                     }
                 }
             </script>
+            <script src="render.js"></script>
+           
         </div>
     </body>
 </html>
