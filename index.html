@@ -149,7 +149,8 @@
                             const str = document.getElementById(`compute_${v}`).value;
                             return str ? parseInt(str) : 0;
                         });
-                        if (Math.min(args) < 0) {
+                        if (Math.min(...args) < 0) {
+                            
                             alert('Inputs must be non-negative');
                             return;
                         }
@@ -165,7 +166,7 @@
                             return str ? parseInt(str) : 0;
                         });
                         
-                        if (Math.min(args) < 0) {
+                        if (Math.min(...args) < 0) {
                             alert('Inputs must be non-negative');
                             return;
                         }
