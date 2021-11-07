@@ -158,6 +158,10 @@
                             alert('Input too large, must be <= 10');
                             return;
                         }
+                        if (Module.ccall("countReachable", 'string', ['number', 'number', 'number', 'number', 'number', 'number'], args).length >= 4) {
+                            alert('Too many sequence');
+                            return;
+                        }
                         output.value = Module.ccall("findReachable", 'string', ['number', 'number', 'number', 'number', 'number', 'number'], args);
                     }
                     countButton.onclick = () => {
