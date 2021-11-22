@@ -165,7 +165,7 @@
                     }, 10000);
 
                     worker.onmessage = ev => {
-                        const [msg, result] = JSON.parse(ev.data);
+                        let [msg, result] = JSON.parse(ev.data);
                         if (msg === 'error') {
                             alert(`Too many sequences, there are ${result} reachable markings`);
                         }
