@@ -170,7 +170,8 @@
                             alert(`Too many sequences, there are ${result} reachable markings`);
                         }
                         if (msg === 'success') {
-                            output.value = result;
+                            result = result.replaceAll('{', '[');
+                            output.value = result.replaceAll('}', ']');
                         }
                         clearTimeout(timeout_worker);
                         worker.terminate();
